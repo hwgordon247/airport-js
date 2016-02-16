@@ -2,9 +2,10 @@ describe("Airport", function(){
 	var airport;
 	var plane;
 
-
 	beforeEach(function(){
-		airport = new Airport();
+		weather = new Weather;
+		spyOn(weather, 'isStormy').and.returnValue(false);
+		airport = new Airport(weather);
 		plane = jasmine.createSpyObj('plane', ['land', 'takeOff']);
 	});
 
@@ -34,5 +35,25 @@ describe("Airport", function(){
 			expect(airport.dockedPlanes).not.toContain(plane);
 		});
 	});
+});
 
+describe('stormy', function() {
+	var airport;
+	var plane;
+
+	beforeEach(function(){
+		weather = new Weather;
+		spyOn(weather, 'isStormy').and.returnValue(true);
+		airport = new Airport(weather);
+		plane = jasmine.createSpyObj('plane', ['land', 'takeOff']);
+	});
+
+	it('cannot land in a storm', function() {
+		expect(function() {airport.requestLand(plane);}).toThrowError(TypeError, "Wait for storm to clear");
+	});
+
+	it('cannot take off in a storm', function() {
+		airport.dockedPlanes = [plane];
+		expect(function() {airport.requestTakeOff(plane);}).toThrowError(TypeError, "Wait for storm to clear");
+	});
 });

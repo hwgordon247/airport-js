@@ -5,7 +5,9 @@ describe("Feature", function(){
 
 	beforeEach(function() {
     plane = new Plane;
-   	airport = new Airport;
+		weather = new Weather;
+		spyOn(weather, 'isStormy').and.returnValue(false);
+   	airport = new Airport(weather);
   });
 
 	it ("changes status", function(){
