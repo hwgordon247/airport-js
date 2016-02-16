@@ -14,5 +14,32 @@ Weather.prototype.makeSunny = function() {
 };
 
 
+function Airport(weather) {
+  this.planes = [];
+  this.weather = weather;
+};
+
+Airport.prototype.requestLand = function(plane) {
+  if (this.weather.storm === true) throw 'there is a storm';
+  plane.land();
+  this.planes.push(plane);
+};
+
+Airport.prototype.requestTakeOff = function() {
+  this.planes.splice(0,1)
+};
+
+function Plane() {
+  this.flying = true;
+};
+
+Plane.prototype.land = function() {
+  this.flying = false;
+};
+
+Plane.prototype.takeOff = function() {
+  this.flying = true;
+};
+
 
 </script>
