@@ -2,11 +2,13 @@ describe("Airport", function(){
 	var airport;
 	var plane;
 
+
 	beforeEach(function(){
 		airport = new Airport();
+		plane = jasmine.createSpyObj('plane', ['land', 'takeOff']);
 	});
 
-	it ("starts with 0 airplanes", function(){ 
+	it ("starts with 0 airplanes", function(){
 		expect(airport.dockedPlanes.length).toEqual(0);
 	});
 
